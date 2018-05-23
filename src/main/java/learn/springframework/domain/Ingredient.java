@@ -1,7 +1,7 @@
 package learn.springframework.domain;
 
 import javax.persistence.*;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 @Entity
 public class Ingredient {
@@ -11,13 +11,19 @@ public class Ingredient {
     private Long id;
 
     private String description;
-    private BigInteger amount;
+    private BigDecimal amount;
 
     @OneToOne
     private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe;
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+    }
 
     public Long getId() {
         return id;
@@ -35,11 +41,11 @@ public class Ingredient {
         this.description = description;
     }
 
-    public BigInteger getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigInteger amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

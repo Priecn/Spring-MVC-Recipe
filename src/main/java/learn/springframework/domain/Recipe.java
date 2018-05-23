@@ -1,6 +1,7 @@
 package learn.springframework.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,7 +30,7 @@ public class Recipe {
     private Note note;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -37,7 +38,7 @@ public class Recipe {
             joinColumns = @JoinColumn(name="RECIPE_ID"),
             inverseJoinColumns = @JoinColumn(name="CATEGORY_ID")
     )
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -125,6 +126,7 @@ public class Recipe {
 
     public void setNote(Note note) {
         this.note = note;
+        note.setRecipe(this);
     }
 
     public Set<Ingredient> getIngredients() {
@@ -133,6 +135,11 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
     }
 
     public Set<Category> getCategories() {
