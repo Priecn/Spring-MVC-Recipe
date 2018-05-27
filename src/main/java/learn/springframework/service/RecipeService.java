@@ -9,4 +9,6 @@ import java.util.List;
 public interface RecipeService {
 
     List<Recipe> getRecipeList();
+
+    Recipe getRecipeById(Long id);
 }
